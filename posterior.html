@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prescripción meses Posteriores</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content-box">
+            <div class="titleContainer">
+                <button class="home-button" onclick="location.href='index.html'">
+                    <i class="fas fa-arrow-left"></i> Inicio
+                </button>
+                <h1>Prescripción meses Posteriores</h1>
+            </div>
+
+            <!-- Zona original -->
+            <div class="drop-zone" id="zonaPosteriorOriginal">
+                <i class="fas fa-file-excel"></i>
+                <p class="drop-title">Sube el archivo de prescripción posterior (Estructura: Tipo Documento, Documento, ...)</p>
+                <p class="drop-subtitle">Formatos soportados: .xlsx, .xls, .csv</p>
+                <input type="file" id="fileInputPosteriorOriginal" class="file-input" accept=".xlsx,.xls,.csv" hidden>
+            </div>
+
+            <div class="button-container">
+                <button class="button primary-button" onclick="processFilePosteriorOriginal()">
+                    <i class="fas fa-play"></i> Procesar Archivo Original
+                </button>
+                <button class="button secondary-button" onclick="clearPosterior()">
+                    <i class="fas fa-eraser"></i> Limpiar Todo
+                </button>
+            </div>
+
+            <div class="button-container" id="btnDescargarExcelPosteriorOriginal" style="display: none;">
+                <button class="export-button" onclick="downloadFilteredExcelPosteriorOriginal()">
+                    <i class="fas fa-file-excel"></i> Descargar Excel Documentos (Posteriores)
+                </button>
+            </div>
+
+            <!-- Zona trabajadores posterior -->
+            <div class="drop-zone" id="zonaPosteriorTrabajadores" style="margin-top: 20px;">
+                <i class="fas fa-users"></i>
+                <p class="drop-title">Sube el archivo de trabajadores devuelto por la app</p>
+                <p class="drop-subtitle">Formatos soportados: .xlsx, .xls, .csv</p>
+                <input type="file" id="fileInputPosteriorTrabajadores" class="file-input" accept=".xlsx,.xls,.csv" hidden>
+            </div>
+
+            <div class="button-container">
+                <button class="button primary-button" onclick="processFilePosteriorTrabajadores()">
+                    <i class="fas fa-cogs"></i> Procesar Trabajadores (Posteriores)
+                </button>
+            </div>
+
+            <!-- Botones adicionales (aparecen después de procesar trabajadores) -->
+            <div id="botonesPosterioresAdicionales" style="display: none;">
+                <div class="button-container">
+                    <button class="export-button" onclick="downloadPopayan()">
+                        <i class="fas fa-map-marker-alt"></i> Popayán
+                    </button>
+                    <button class="export-button" onclick="downloadZonaNorte()">
+                        <i class="fas fa-map-marker-alt"></i> Zona Norte
+                    </button>
+                    <button class="export-button" onclick="downloadMsjTextoGmail()">
+                        <i class="fas fa-sms"></i> Msj Texto y Gmail
+                    </button>
+                    <button class="export-button" onclick="downloadPaginaWeb()">
+                        <i class="fas fa-globe"></i> Página Web
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botón descargar Excel final (completo) -->
+            <div class="button-container" id="btnDescargarPosteriorFinal" style="display: none;">
+                <button class="export-button" onclick="downloadPosteriorFinal()">
+                    <i class="fas fa-file-excel"></i> Descargar Excel Final (Posteriores)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-buttons-container">
+        <button class="scrollButton" onclick="scrollToTop()">Subir</button>
+        <button class="scrollButton" onclick="scrollToBottom()">Ir al Final</button>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <span class="spinner">🔄</span>
+            <p>Procesando... Por favor espere...</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+    <script src="scripts_posterior.js"></script>
+
+    <script>
+        function setupDropZone(zonaId, inputId) {
+            const zona = document.getElementById(zonaId);
+            const fileInput = document.getElementById(inputId);
+            if (!zona || !fileInput) return;
+
+            ['dragenter', 'dragover'].forEach(ev => zona.addEventListener(ev, (e) => {
+                e.preventDefault(); e.stopPropagation(); zona.classList.add('dragover');
+            }, false));
+            ['dragleave', 'drop'].forEach(ev => zona.addEventListener(ev, (e) => {
+                e.preventDefault(); e.stopPropagation(); zona.classList.remove('dragover');
+            }, false));
+
+            zona.addEventListener('drop', (e) => {
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    fileInput.files = e.dataTransfer.files;
+                    zona.classList.add('file-loaded');
+                    zona.querySelector('.drop-title').innerHTML = `<i class="fas fa-check-circle"></i> ${file.name}`;
+                    setTimeout(() => zona.classList.remove('file-loaded'), 1000);
+                }
+            });
+
+            zona.addEventListener('click', () => fileInput.click());
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length > 0) {
+                    zona.classList.add('file-loaded');
+                    const fileName = fileInput.files[0].name;
+                    zona.querySelector('.drop-title').innerHTML = `<i class="fas fa-check-circle"></i> ${fileName}`;
+                    setTimeout(() => zona.classList.remove('file-loaded'), 1000);
+                }
+            });
+        }
+
+        setupDropZone('zonaPosteriorOriginal', 'fileInputPosteriorOriginal');
+        setupDropZone('zonaPosteriorTrabajadores', 'fileInputPosteriorTrabajadores');
+
+        function scrollToBottom() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
+</body>
+</html>

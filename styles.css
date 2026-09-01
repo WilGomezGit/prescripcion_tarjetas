@@ -1,0 +1,408 @@
+/* ====== Reset ====== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../imagen/fondo.jpg');
+    background-repeat: repeat;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.85) 0%, rgba(2, 132, 199, 0.75) 50%, rgba(8, 145, 178, 0.85) 100%);
+    z-index: -1;
+}
+
+.container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    flex: 1;
+}
+
+.content-box {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.titleContainer {
+    position: relative;
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+.home-button {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.home-button:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+}
+
+/* ====== Menú principal ====== */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.menu-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    color: #1e3a8a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.menu-card i {
+    font-size: 3rem;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.menu-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.menu-card p {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* ====== Botones generales ====== */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.primary-button {
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: white;
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+}
+
+.primary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.4);
+}
+
+.secondary-button {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+}
+
+.secondary-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+}
+
+.export-button {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.export-button:hover {
+    background: #059669;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* ====== Drop zone (compacta) ====== */
+.drop-zone {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 20px auto;
+    background: #f8fafc;
+    border: 2px dashed #94a3b8;
+    border-radius: 12px;
+    padding: 20px 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.drop-zone i {
+    font-size: 2rem;
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.drop-zone .drop-title {
+    font-size: 0.95rem;
+    color: #334155;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.drop-zone .drop-subtitle {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.file-input {
+    display: none;
+}
+
+.drop-zone:hover {
+    border-color: #2563eb;
+    background: #eff6ff;
+    transform: scale(1.01);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.15);
+}
+
+.drop-zone.dragover {
+    border-color: #2563eb;
+    background: #eff6ff;
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+}
+
+.drop-zone.file-loaded {
+    animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+/* ====== Tabla ====== */
+.output-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    overflow-x: auto;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.styled-table thead {
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: white;
+}
+
+.styled-table th, .styled-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #eff6ff;
+}
+
+/* ====== Botones de scroll ====== */
+.scroll-buttons-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.scrollButton {
+    background: linear-gradient(135deg, #2563eb, #06b6d4);
+    color: white;
+    border: 2px solid white;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+.scrollButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #1e40af, #0284c7);
+}
+
+.scrollButton:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ====== Loading Overlay ====== */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loading-content {
+    background: white;
+    padding: 20px 40px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.spinner {
+    font-size: 40px;
+    display: block;
+    margin-bottom: 10px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ====== Responsive ====== */
+@media (max-width: 768px) {
+    .content-box {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    .home-button {
+        position: static;
+        transform: none;
+        margin-bottom: 15px;
+    }
+
+    .home-button:hover {
+        transform: none;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button, .export-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .drop-zone {
+        padding: 20px 10px;
+    }
+}

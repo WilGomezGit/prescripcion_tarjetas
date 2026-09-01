@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Archivos Prescripción - Menú</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content-box">
+            <div class="titleContainer">
+                <h1>Generar Archivos Prescripción</h1>
+                <p style="margin-top: 10px; color: #64748b;">Selecciona una de las opciones para comenzar</p>
+            </div>
+            <div class="menu-grid">
+                <a href="prescripcion.html" class="menu-card">
+                    <i class="fas fa-file-invoice"></i>
+                    <h3>Prescripción Sub Filiar</h3>
+                    <p>Procesa archivos de prescripción, filtra y genera documentos para mensajes de texto y Gmail.</p>
+                </a>
+                <a href="posterior.html" class="menu-card">
+                    <i class="fas fa-hourglass-half"></i>
+                    <h3>Prescripción meses Posteriores</h3>
+                    <p>Procesa archivos de prescripción de meses posteriores y cruza datos para generar el Excel final.</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="scroll-buttons-container">
+        <button class="scrollButton" onclick="scrollToTop()">Subir</button>
+        <button class="scrollButton" onclick="scrollToBottom()">Ir al Final</button>
+    </div>
+    <script>
+        function scrollToBottom() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    </script>
+</body>
+</html>
