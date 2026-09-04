@@ -340,7 +340,7 @@ async function downloadPrescripcionConsumos() {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.href = url;
-    link.download = 'PrescripcionConsumos.xlsx';
+    link.download = 'Prescripcion_Consumos_MM_AAAA_Mtx_Gmail.xlsx';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
