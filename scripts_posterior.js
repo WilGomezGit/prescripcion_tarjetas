@@ -132,7 +132,10 @@ async function downloadFilteredExcelPosteriorOriginal() {
     link.download = `DocumentosPosteriores_${new Date().toISOString().slice(0,10)}.xlsx`;
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }, 1000);
 }
 
 // ============================================
@@ -312,7 +315,10 @@ async function downloadPosteriorFinal() {
     link.download = 'PrescripcionConsumosPosteriores.xlsx';
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }, 1000);
 }
 
 // ============================================
@@ -373,7 +379,10 @@ async function downloadPopayan() {
     link.download = 'Popayan.xlsx';
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }, 1000);
 }
 
 // ============================================
@@ -434,7 +443,10 @@ async function downloadZonaNorte() {
     link.download = 'ZonaNorte.xlsx';
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }, 1000);
 }
 
 // ============================================
@@ -471,7 +483,10 @@ async function downloadMsjTextoGmail() {
     link.download = 'MsjTextoGmail.xlsx';
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }, 1000);
 }
 
 // ============================================
@@ -506,7 +521,10 @@ async function downloadPaginaWeb() {
     link.download = 'PaginaWeb.xlsx';
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href);
+    }, 1000);
 }
 
 // ============================================

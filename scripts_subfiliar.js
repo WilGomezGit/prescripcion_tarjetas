@@ -244,8 +244,10 @@ async function downloadFilteredExcel() {
     link.download = `DocumentosPrescripcion_${fecha}.xlsx`;
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }, 1000);
 }
 
 // ============================================
@@ -380,6 +382,8 @@ async function downloadPrescripcionConsumos() {
     link.download = 'Prescripcion_Consumos_MM_AAAA_Mtx_Gmail.xlsx';
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }, 1000);
 }
