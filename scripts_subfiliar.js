@@ -6,6 +6,30 @@ let dataTrabajadores = [];
 
 const MAX_FILAS_TABLA = 500;
 
+// Convierte valores como 15000, "15000", "$ 15.000", "15.000,50" o "15,000.50" a número
+function parseValor(v) {
+    if (typeof v === 'number') return v;
+    let s = String(v == null ? '' : v).trim();
+    if (!s) return 0;
+    const neg = /^\(.*\)$/.test(s) || s.startsWith('-');
+    s = s.replace(/[^\d.,]/g, '');
+    if (!s) return 0;
+    const lastDot = s.lastIndexOf('.');
+    const lastComma = s.lastIndexOf(',');
+    if (lastDot !== -1 && lastComma !== -1) {
+        // El último separador es el decimal
+        if (lastComma > lastDot) s = s.replace(/\./g, '').replace(',', '.');
+        else s = s.replace(/,/g, '');
+    } else if (lastComma !== -1) {
+        s = /,\d{3}(,|$)/.test(s) && s.split(',').length > 1 && !/,\d{1,2}$/.test(s)
+            ? s.replace(/,/g, '') : s.replace(',', '.');
+    } else if (lastDot !== -1) {
+        if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '');
+    }
+    const n = parseFloat(s);
+    return isNaN(n) ? 0 : (neg ? -n : n);
+}
+
 function showLoading() {
     const overlay = document.getElementById('loadingOverlay');
     if (overlay) overlay.style.display = 'flex';
@@ -76,14 +100,14 @@ function processFileSubFiliar() {
                     const obj = {};
                     headers.forEach((h, idx) => {
                         if (h === 'Documento') obj[h] = String(row[idx] || '').trim().replace(/['’]/g, '');
-                        else obj[h] = row[idx] ? String(row[idx]).trim() : '';
+                        else obj[h] = (row[idx] !== '' && row[idx] != null) ? String(row[idx]).trim() : '';
                     });
                     return obj;
                 }).filter(o => o['Documento'] && o['Documento'] !== '' && o['Documento'] !== 'TOTAL');
 
                 // 🔥 FILTRO CORREGIDO: solo > 10000
                 filteredData = dataSubFiliar.filter(item => {
-                    const valor = parseFloat(item['Valor a Prescribir']) || 0;
+                    const valor = parseValor(item['Valor a Prescribir']);
                     return valor > 10000;
                 });
 
