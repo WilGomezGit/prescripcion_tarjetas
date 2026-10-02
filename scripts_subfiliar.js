@@ -10,7 +10,7 @@ const MAX_FILAS_TABLA = 500;
 function canonHeader(h) {
     const n = String(h).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
     if (n === 'documento') return 'Documento';
-    if (n === 'valor a prescribir') return 'Valor a Prescribir';
+    if (n === 'valor a prescribir' || n === 'valor prescribir' || n === 'valor a prescribir ($)') return 'Valor a Prescribir';
     return String(h).trim();
 }
 
@@ -127,7 +127,12 @@ function processFileSubFiliar() {
                 if (btn) btn.style.display = filteredData.length > 0 ? 'block' : 'none';
 
                 if (filteredData.length === 0) {
-                    alert('No se encontraron registros con Valor a Prescribir > 10000.');
+                    const hayCol = headers.includes('Valor a Prescribir');
+                    alert('No se encontraron registros con Valor a Prescribir > 10000.' +
+                        '\nFilas leídas: ' + dataSubFiliar.length +
+                        '\nColumna "Valor a Prescribir" ' + (hayCol ? 'encontrada' : 'NO encontrada') +
+                        '\nEncabezados: ' + headers.join(' | ') +
+                        (dataSubFiliar[0] ? '\nEjemplo de valor: ' + JSON.stringify(dataSubFiliar[0]['Valor a Prescribir']) : ''));
                 } else {
                     // Aviso si se truncó la tabla por límite
                     if (filteredData.length > MAX_FILAS_TABLA) {
