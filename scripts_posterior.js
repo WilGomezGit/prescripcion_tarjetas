@@ -1,3 +1,12 @@
+
+// Normaliza encabezados (mayúsculas, espacios, tildes) a los nombres esperados
+function canonHeader(h) {
+    const n = String(h).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (n === 'documento') return 'Documento';
+    if (n === 'valor a prescribir') return 'Valor a Prescribir';
+    return String(h).trim();
+}
+
 // Variables globales Posteriores
 let dataPosteriorOriginal = [];
 let filteredDataPosteriorOriginal = [];
@@ -70,7 +79,7 @@ function processFilePosteriorOriginal() {
                 }
                 if (hIdx === -1) throw new Error('No se encontró la fila de encabezados (Documento, Valor a Prescribir).');
 
-                headersPosteriorOriginal = rows[hIdx].map(h => String(h).trim());
+                headersPosteriorOriginal = rows[hIdx].map(canonHeader);
                 const dataRows = rows.slice(hIdx + 1);
 
                 dataPosteriorOriginal = dataRows.map(row => {
