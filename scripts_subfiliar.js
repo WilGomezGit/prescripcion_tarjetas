@@ -6,6 +6,14 @@ let dataTrabajadores = [];
 
 const MAX_FILAS_TABLA = 500;
 
+// Normaliza encabezados (mayúsculas, espacios, tildes) a los nombres esperados
+function canonHeader(h) {
+    const n = String(h).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    if (n === 'documento') return 'Documento';
+    if (n === 'valor a prescribir') return 'Valor a Prescribir';
+    return String(h).trim();
+}
+
 // Convierte valores como 15000, "15000", "$ 15.000", "15.000,50" o "15,000.50" a número
 function parseValor(v) {
     if (typeof v === 'number') return v;
@@ -92,7 +100,7 @@ function processFileSubFiliar() {
                     throw new Error('No se encontró la fila de encabezados (Documento, Valor a Prescribir).');
                 }
 
-                headers = rows[headerIndex].map(h => String(h).trim());
+                headers = rows[headerIndex].map(canonHeader);
                 const dataRows = rows.slice(headerIndex + 1);
 
                 // Convertir filas en objetos
